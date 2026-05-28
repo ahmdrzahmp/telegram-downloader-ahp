@@ -1,0 +1,22 @@
+name: Download Telegram Video
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'لینک مستقیم ویدیو (از تلگرام)'
+        required: true
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دانلود ویدیو
+        run: |
+          curl -L -o video.mp4 "${{ github.event.inputs.video_url }}"
+
+      - name: آپلود artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: telegram-video
+          path: video.mp4
